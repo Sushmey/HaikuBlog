@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block addContent %}
+	<div class="container p-2">
+		<form method="POST" action="">
+			{{form.hidden_tag()}} <!-- Adds a CSRF token to protect from attacks -->
+			<fieldset>
+				<div class="form-floating mb-3">
+					{% if form.haiku.errors %}
+						{{form.haiku(class="form-control form-control-lg is-invalid")}}
+						<div class="invalid-feedback">
+							{% for error in form.haiku.errors %}
+								<span> {{error}} </span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{form.haiku(class="form-control form-control-lg",placeholder="haiku", id="floatingTextarea2", style="min-height:100px")}}
+					{% endif %}
+					{{form.haiku.label}}
+				</div>
+				<div class="form-group">
+					{{form.submit(class="btn btn-success")}}
+				</div>
+			</fieldset>
+		</form>
+	</div>	
+{% endblock addContent %}
