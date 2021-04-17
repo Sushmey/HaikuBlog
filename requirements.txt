@@ -1,7 +1,10 @@
 click==7.1.2
 Flask==1.1.2
+Flask-WTF==0.14.3
 itsdangerous==1.1.0
 Jinja2==2.11.3
 MarkupSafe==1.1.1
-syllables==0.1.0
+syllapy==0.7.1
+ujson==1.35
 Werkzeug==1.0.1
+WTForms==2.3.3

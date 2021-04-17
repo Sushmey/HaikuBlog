@@ -3,4 +3,10 @@
 	<h1>
 		Sushmey
 	</h1>
+	{% for post in posts %}
+		<div class="container">
+			<h5 class="display-5">{{post['haiku']}}</h3>
+			<small> {{post['author']}} </small>
+		</div>
+	{% endfor %}
 {% endblock %}
