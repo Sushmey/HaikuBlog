@@ -1,5 +1,5 @@
 #Somehow this greenlet.h file suddenly popped up when I uploaded it to my git repo, don't know what it does and why it isn't ignored already
-greenlet.h
+/include/site/python3.9/greenlet/greenlet.h
 #Environment variables
 .env
 #MacOS file
