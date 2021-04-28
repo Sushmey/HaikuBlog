@@ -2,18 +2,18 @@ from flask import Flask, render_template, url_for, request, flash, redirect
 from flask_mysqldb import MySQL
 import os
 import syllapy
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 from haikuInput import Haiku, LoginForm, RegistrationForm
 app = Flask(__name__)
 
 
-#load_dotenv('.env')
+load_dotenv('.env')
 
 #SQL DB INfO
-app.config['MYSQL_USER'] = os.environ.get("USERNAME")
-app.config['MYSQL_PASSWORD'] = os.environ.get("PASSWORD")
-app.config['MYSQL_HOST'] = os.environ.get("DOMAIN")
-app.config['MYSQL_DB'] = os.environ.get("DB")
+app.config['MYSQL_USER'] = os.getenv('USERNAME')
+app.config['MYSQL_PASSWORD'] = os.getenv('PASSWORD')
+app.config['MYSQL_HOST'] = os.getenv('HOST')
+app.config['MYSQL_DB'] = os.getenv('DB')
 app.config['MYSQL_CURSORCLASS'] = 'Dict'
 
 
