@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block addContent %}
+	<div class="container py-2">
+		<form method="POST" action="">
+			{{form.hidden_tag()}} <!-- Adds a CSRF token to protect from attacks -->
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4"> Login </legend>
+				<div>
+					{{form.email.label}}
+					{% if form.email.errors %}
+						{{form.email(class="form-control form-control-lg is-invalid")}}
+						<div class="invalid-feedback">
+							{% for error in form.email.errors %}
+								<span>{{error}}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{form.email(class="form-control form-control-lg")}}
+					{% endif %}	
+				</div>
+				<div>
+					{{form.password.label}}
+					{% if form.password.errors %}
+						{{form.password(class="form-control form-control-lg is-invalid")}}
+						<div class="invalid-feedback">
+							{% for error in form.password.errors %}
+								<span>{{error}}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{form.password(class="form-control form-control-lg")}}
+					{% endif %}	
+				</div>
+				<div class="form-check">
+					{{form.remember(class="form-check-input")}}
+					{{form.remember.label(class="form-check-label")}}
+				</div>
+				<small class="text muted">
+				<a class="text-decoration-none" href="#"> Forgot password? </a>
+			</small>
+			</fieldset>
+			<div class="form-group py-2">
+				{{form.submit}}
+			</div>
+		</form>
+		<div>
+		<small>
+			Don't have an account? <a class="text-decoration-none" href="{{url_for('register')}}"> Sign up! </a>
+		</small>
+	</div>
+	</div>
+{% endblock addContent %}
