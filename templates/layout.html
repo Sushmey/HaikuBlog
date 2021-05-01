@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-dark"> <!-- adding class theme for darker theme -->
+<html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -16,8 +16,8 @@
 	{% endif %}
 
   </head>
-  <body class="bg-dark"> <!-- adding class theme for darker theme -->
-    <div class="container text-light py-2"> <!-- adding class theme for lighter text on dark theme -->
+  <body> <!-- adding class theme for darker theme -->
+    <div class="container py-2">
     	{% with messages = get_flashed_messages(with_categories=true)%}
     		{% if messages %}
     			{% for category, message in messages %}
