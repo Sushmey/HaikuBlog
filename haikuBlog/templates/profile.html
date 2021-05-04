@@ -1,0 +1,5 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h1 class="display-4">{{user[0]['username']}}'s page</h1>
+	<a href="{{url_for('logout')}}">Logout</a>
+{% endblock content%}
