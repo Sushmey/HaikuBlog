@@ -1,5 +1,57 @@
 {% extends 'layout.html' %}
 {% block content %}
-	<h1 class="display-4">{{user[0]['username']}}'s page</h1>
+	<img class="rounded-circle account-image" src="{{profile_image}}">
+	<div class="media body">
+		<h2 class="account-heading">{{user[0]['username']}}</h2>
+		<p class="text-secondary">{{user[0]['email']}}</p>
+	</div>
+	<div class="container py-2">
+		<form method="POST" action="" enctype="multipart/form-data">
+			{{form.hidden_tag()}} <!-- Adds a CSRF token to protect from attacks -->
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Account Info</legend>
+				<div>
+					{{form.username.label}}
+					{% if form.username.errors %}
+						{{form.username(class="form-control form-control-lg is-invalid")}}
+						<div class="invalid-feedback">
+							{% for error in form.username.errors %}
+								<span>{{error}}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{form.username(class="form-control form-control-lg")}}
+					{% endif %}	
+				</div>
+				<div>
+					{{form.email.label}}
+					{% if form.email.errors %}
+						{{form.email(class="form-control form-control-lg is-invalid")}}
+						<div class="invalid-feedback">
+							{% for error in form.email.errors %}
+								<span>{{error}}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{form.email(class="form-control form-control-lg")}}
+					{% endif %}	
+				</div>
+				<div>
+					{{form.pfp.label}}
+					{{form.pfp}}
+					{% if form.pfp.errors %}
+						{% for error in form.pfp.errors %}
+							<span class="text-danger">{{error}}</span>
+							<br>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</fieldset>
+			<div class="form-group py-2">
+				{{form.submit}}
+			</div>
+		</form>
+	</div>
+
 	<a href="{{url_for('logout')}}">Logout</a>
 {% endblock content%}

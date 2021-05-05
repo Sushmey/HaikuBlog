@@ -1,10 +1,10 @@
 from flask import render_template, url_for, request, flash, redirect, g, session
 from haikuBlog import app
 import syllapy
-from haikuBlog.haikuInput import Haiku, LoginForm, RegistrationForm
+from haikuBlog.haikuInput import Haiku, LoginForm, RegistrationForm, ProfileUpdateForm
 
 from haikuBlog import mysql
-from haikuBlog.functions import hashPassword, passwordMatch
+from haikuBlog.functions import hashPassword, passwordMatch, savePicture
 
 from flask_login import login_user
 
@@ -88,13 +88,30 @@ def register():
 
 
 
-@app.route('/profile')
+@app.route('/profile',methods=['GET','POST'])
 def profile():
 	if('user_id' in session):
+		form = ProfileUpdateForm()
 		cursor = mysql.connection.cursor()
 		cursor.execute("SELECT * FROM User WHERE user_id='{user_id}'".format(user_id=session['user_id']))
 		user = cursor.fetchall()
-		return render_template('profile.html',title='Profile',user=user)
+		profile_image = url_for('static',filename='profile_picx/'+user[0]['profile_img'])
+		if(form.validate_on_submit()):
+			if(form.username.data == user[0]['username'] and form.email.data == user[0]['email'] and form.pfp.data == user[0]['profile_img']):
+				flash('Username is same, no change','danger')
+				return redirect(url_for('profile'))	
+			if(form.pfp.data):
+				profile_image = savePicture(form.pfp.data,user)
+				cursor.execute("UPDATE User SET profile_img='{profile_image}' WHERE user_id='{user_id}'".format(profile_image=profile_image,user_id = session['user_id']))  	
+			cursor.execute("UPDATE User SET username = '{username}', email='{email}' WHERE user_id='{user_id}'".format(user_id=session['user_id'],username=form.username.data,email=form.email.data))
+			mysql.connection.commit()
+			flash('Account info has been updated!', 'success')
+			return redirect(url_for('profile'))
+		elif(request.method=='GET'):
+			form.username.data = user[0]['username']
+			form.email.data = user[0]['email']	
+		cursor.close()
+		return render_template('profile.html',title='Profile',user=user,profile_image=profile_image, form=form)
 	else:
 		return redirect(url_for('login'))	
 

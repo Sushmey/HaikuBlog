@@ -1,5 +1,10 @@
 from flask_bcrypt import Bcrypt
 from haikuBlog import mysql
+from haikuBlog import os
+import secrets
+from haikuBlog import app
+from PIL import Image
+
 
 
 #Creating an object 
@@ -10,6 +15,23 @@ def hashPassword(password):
 
 def passwordMatch(hashedPassword,inputPassword):
 	return bcrypt.check_password_hash(hashedPassword,inputPassword)	
+
+def savePicture(picture,user):
+	random_hex = secrets.token_hex(8)
+	f_name, f_ext = os.path.splitext(picture.filename)
+	picture_fn = random_hex + f_ext
+	picture_path = os.path.join(app.root_path, 'static/profile_picx',picture_fn)
+
+	#Checking to see if picture already exists so that we can just replace it instead of saving a new one
+	prev_pic = os.path.join(app.root_path, 'static/profile_picx',user[0]['profile_img'])
+	if (os.path.exists(prev_pic) and prev_pic != 'default.png'):
+		os.remove(prev_pic)
+	#Resizing the picture to save space 
+	output_size = (125,125)
+	i = Image.open(picture)
+	i.thumbnail(output_size)
+	i.save(picture_path)
+	return picture_fn
 
 def haikuFormatter(haiku):
 	syllables=0
