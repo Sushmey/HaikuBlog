@@ -20,6 +20,7 @@ def validate_haiku(form,haiku):
 
 class Haiku(FlaskForm):
 	haiku = StringField('Haiku',validators=[InputRequired(), validate_haiku])
+	title = StringField('title',validators=[InputRequired(),Length(max=140)])
 	submit = SubmitField('Post!')
 
 class RegistrationForm(FlaskForm):

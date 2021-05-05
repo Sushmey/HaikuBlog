@@ -1,12 +1,11 @@
 {% extends 'layout.html' %}
 {% block content %}
-	<h1>
-		Sushmey
-	</h1>
 	{% for post in posts %}
 		<div class="container">
-			<h5 class="display-5">{{post['haiku']}}</h3>
-			<small> {{post['author']}} </small>
+			<h4>{{post['title']}}</h4>
+			<h5 class="display-5">{{post['content']}}</h3>
+			<small> {{post['date_posted']}} </small>	
+			<small> {{post['username']}} </small>
 		</div>
 	{% endfor %}
 {% endblock %}

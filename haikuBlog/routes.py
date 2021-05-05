@@ -4,7 +4,7 @@ import syllapy
 from haikuBlog.haikuInput import Haiku, LoginForm, RegistrationForm, ProfileUpdateForm
 
 from haikuBlog import mysql
-from haikuBlog.functions import hashPassword, passwordMatch, savePicture
+from haikuBlog.functions import hashPassword, passwordMatch, savePicture, haikuFormatter
 
 from flask_login import login_user
 
@@ -31,19 +31,29 @@ def before_request():  #This function checks if theres a user in session before 
 @app.route('/')
 @app.route('/home')
 def home():
+	cursor = mysql.connection.cursor()
+	cursor.execute("SELECT * FROM Posts INNER JOIN User ON Posts.user_id = User.user_id")
+	posts = cursor.fetchall()
 	return render_template('home.html',title='Home',posts=posts)
 
-@app.route('/addhaiku',methods=['GET','POST'])
-def haikuInput():
-	form = Haiku()
-	if(form.validate_on_submit() and request.method=='POST'):
-		inputHaiku = request.form
-		print(inputHaiku['haiku'])
-		haiku = haikuFormatter(inputHaiku['haiku'])
-		print(haiku)
-		author = 'author'
-		posts =[{'haiku':haiku,'author':author},{}]
-	return render_template('inputPage.html',title='Add', form=form )
+@app.route('/post/new',methods=['GET','POST'])
+def postHaiku():
+	if('user_id' in session):
+		form = Haiku()
+		if(form.validate_on_submit() and request.method=='POST'):
+			inputHaiku = request.form
+			haiku = haikuFormatter(inputHaiku['haiku'])
+			title = inputHaiku['title']
+			cursor = mysql.connection.cursor()
+			cursor.execute("INSERT INTO Posts (title,content,user_id) VALUES(%s,%s,%s)",(title,haiku,session['user_id']))
+			mysql.connection.commit()
+			cursor.close()
+			flash('Your haiku has been uploaded!','success')
+			return redirect(url_for('home'))
+		return render_template('inputPage.html',title='Add', form=form )
+	else:
+		return redirect(url_for('login'))
+			
 
 @app.route('/login',methods=['GET','POST'])
 def login():

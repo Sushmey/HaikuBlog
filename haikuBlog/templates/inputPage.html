@@ -5,6 +5,19 @@
 			{{form.hidden_tag()}} <!-- Adds a CSRF token to protect from attacks -->
 			<fieldset>
 				<div class="form-floating mb-3">
+					{% if form.title.errors %}
+						{{form.title(class="form-control form-control-lg is-invalid")}}
+						<div class="invalid-feedback">
+							{% for error in form.title.errors %}
+								<span> {{error}} </span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{form.title(class="form-control form-control-lg",placeholder="title", id="floatingTextarea2", style="min-height:110px")}}
+					{% endif %}
+					{{form.title.label}}
+				</div>
+				<div class="form-floating mb-3">
 					{% if form.haiku.errors %}
 						{{form.haiku(class="form-control form-control-lg is-invalid")}}
 						<div class="invalid-feedback">

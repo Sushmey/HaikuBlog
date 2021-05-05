@@ -2,6 +2,7 @@ from flask_bcrypt import Bcrypt
 from haikuBlog import mysql
 from haikuBlog import os
 import secrets
+import syllapy
 from haikuBlog import app
 from PIL import Image
 
