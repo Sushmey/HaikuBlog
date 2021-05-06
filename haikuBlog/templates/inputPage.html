@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block addContent %}
+{% block content %}
 	<div class="container p-2">
 		<form method="POST" action="">
 			{{form.hidden_tag()}} <!-- Adds a CSRF token to protect from attacks -->
@@ -26,7 +26,7 @@
 							{% endfor %}
 						</div>
 					{% else %}
-						{{form.haiku(class="form-control form-control-lg",placeholder="haiku", id="floatingTextarea2", style="min-height:110px")}}
+						{{form.haiku(class="form-control form-control-lg",placeholder="haiku", id="floatingTextarea2")}}
 					{% endif %}
 					{{form.haiku.label}}
 				</div>
@@ -40,4 +40,4 @@
 			</fieldset>
 		</form>
 	</div>	
-{% endblock addContent %}
+{% endblock content %}

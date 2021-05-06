@@ -8,11 +8,6 @@ from haikuBlog.functions import hashPassword, passwordMatch, savePicture, haikuF
 
 from flask_login import login_user
 
-posts = [{'haiku':'Bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh',
-		'author':'author'	
-		},{}]
-
-
 
 
 @app.before_request
@@ -129,12 +124,15 @@ def profile():
 def logout():
 	if('user_id' in session):
 		session.pop('user_id',None)
+	flash('Logout successful!', 'success')	
 	return redirect(url_for('login'))	
 
 
 
 
-
+@app.route('/about')
+def about():
+	return render_template('about.html',title='about')
 
 
 

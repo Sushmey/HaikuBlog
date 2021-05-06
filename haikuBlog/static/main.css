@@ -1,0 +1,17 @@
+.formatter{
+	white-space: pre-wrap;
+}
+
+html{
+	min-height:100vh;
+}
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+.content-section {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}

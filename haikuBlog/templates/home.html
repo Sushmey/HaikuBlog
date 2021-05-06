@@ -1,11 +1,17 @@
 {% extends 'layout.html' %}
 {% block content %}
-	{% for post in posts %}
-		<div class="container">
-			<h4>{{post['title']}}</h4>
-			<h5 class="display-5">{{post['content']}}</h3>
-			<small> {{post['date_posted']}} </small>	
-			<small> {{post['username']}} </small>
+	<div class="p-3">
+		{% for post in posts %}
+		<div class="p-3">
+			<div class="container card rounded border-light p-3">
+				<h4 class="fw-bold display-6">{{post['title']}}</h4>
+				<h3 class="formatter p-2 border-top">{{post['content']}}</h3>
+				<div class="container d-flex justify-content-between">
+					<small> {{post['date_posted']}} </small>	
+					<figcaption class="blockquote-footer">{{post['username']}} </figcaption>
+				</div>
+			</div>
 		</div>
-	{% endfor %}
+		{% endfor %}
+	</div>
 {% endblock %}
