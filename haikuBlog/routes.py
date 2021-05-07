@@ -96,6 +96,9 @@ def register():
 @app.route('/profile',methods=['GET','POST'])
 def profile():
 	if('user_id' in session):
+		cursor = mysql.connection.cursor()
+		cursor.execute("SELECT * FROM Posts INNER JOIN User ON Posts.user_id = User.user_id WHERE User.user_id='{user_id}'".format(user_id=session['user_id']))
+		userPosts = cursor.fetchall()
 		form = ProfileUpdateForm()
 		cursor = mysql.connection.cursor()
 		cursor.execute("SELECT * FROM User WHERE user_id='{user_id}'".format(user_id=session['user_id']))
@@ -116,9 +119,14 @@ def profile():
 			form.username.data = user[0]['username']
 			form.email.data = user[0]['email']	
 		cursor.close()
-		return render_template('profile.html',title='Profile',user=user,profile_image=profile_image, form=form)
+		return render_template('profile.html',title='Profile',user=user,profile_image=profile_image, form=form, userPosts=userPosts)
 	else:
 		return redirect(url_for('login'))	
+
+
+
+
+
 
 @app.route('/logout')
 def logout():

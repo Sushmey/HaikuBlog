@@ -13,7 +13,7 @@
 							{% endfor %}
 						</div>
 					{% else %}
-						{{form.title(class="form-control form-control-lg",placeholder="title", id="floatingTextarea2", style="min-height:110px")}}
+						{{form.title(class="form-control form-control-lg",placeholder="title", id="floatingTextarea2")}}
 					{% endif %}
 					{{form.title.label}}
 				</div>
@@ -26,7 +26,7 @@
 							{% endfor %}
 						</div>
 					{% else %}
-						{{form.haiku(class="form-control form-control-lg",placeholder="haiku", id="floatingTextarea2")}}
+						{{form.haiku(class="form-control form-control-lg",placeholder="haiku", id="floatingTextarea2", style="min-height:110px")}}
 					{% endif %}
 					{{form.haiku.label}}
 				</div>
@@ -40,4 +40,11 @@
 			</fieldset>
 		</form>
 	</div>	
+	<div class="container p-2">
+			<h1>Haikus:</h1>
+			<p>Haiku is a japanese form of poetry, 17 syllabled poem <br>
+			in a 5-7-5 pattern</p>
+			<p class="fst-italic">This is a haiku <br> this is the middle of it <br> end of this haiku</p>
+			<p>So the first line "This is a haiku" has 5 syllables, <br> next one has 7 syllables and last line has 5 syllables <br> thus making a haiku</p>
+		</div>
 {% endblock content %}

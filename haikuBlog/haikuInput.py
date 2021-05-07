@@ -8,19 +8,18 @@ from haikuBlog import mysql
 
 
 def validate_haiku(form,haiku):
-	syllables2 = syllapy.count(haiku.data)
 	words = haiku.data.split()
 	syllables = 0
 	for word in words:
 		word = word.lower()
 		syllables+=syllapy.count(word)
-	if (syllables != 17 and syllables2 !=17):
+	if (syllables != 17):
 		raise ValidationError("Check the number of syllables")		
 
 
 class Haiku(FlaskForm):
 	haiku = StringField('Haiku',validators=[InputRequired(), validate_haiku])
-	title = StringField('title',validators=[InputRequired(),Length(max=140)])
+	title = StringField('Title',validators=[InputRequired(),Length(max=140)])
 	submit = SubmitField('Post!')
 
 class RegistrationForm(FlaskForm):
@@ -57,8 +56,7 @@ class LoginForm(FlaskForm):
 		emailID = cursor.fetchall()
 		cursor.close()
 		if (emailID==()):
-			raise ValidationError("Account does not exist. Please sign up")		
-
+			raise ValidationError("Account does not exist. Please sign up")			
 
 class ProfileUpdateForm(FlaskForm):
 	username = StringField('Username',validators=[InputRequired(),Length(min=3,max=20)])

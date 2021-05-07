@@ -1,25 +1,21 @@
 {% extends 'layout.html' %}
 {% block content %}
-	<div class="row content-section p-2">
-		<div class="media">
-			<div class="col d-flex flex-row">
-				<img class="rounded-circle account-image" src="{{profile_image}}">
-				<div class="py-2 px-3 media body">
-					<h2 class="account-heading">{{user[0]['username']}}</h2>
-					<p class="text-light">{{user[0]['email']}}</p>
-				</div>
-			</div> 
-		</div>
-		<div class="col">
-		</div>
-	</div>
-	<div class="container py-2">
+	<div>
 		<form method="POST" action="" enctype="multipart/form-data">
 			{{form.hidden_tag()}} <!-- Adds a CSRF token to protect from attacks -->
 			<fieldset class="form-group">
 				<legend class="border-bottom mb-4">Account Info</legend>
-				<div class="row">
-					<div class="col">
+				<div class="row d-flex p-2">
+					<div class="media col">
+						<div class="container d-flex justify-content-center align-items-center" style="height: 20vh;">
+							<img class="rounded-circle account-image" src="{{profile_image}}">
+							<div class="py-2 px-3 media-body">
+								<h2 class="account-heading">{{user[0]['username']}}</h2>
+								<p class="text-light">{{user[0]['email']}}</p>
+							</div>
+						</div> 
+					</div>
+					<div class="col flex-grow-1 m-0">
 						<div>
 							{{form.username.label}}
 							{% if form.username.errors %}
@@ -56,14 +52,63 @@
 								{% endfor %}
 							{% endif %}
 						</div>
-					</div>
-					<div class="col card">
+						<div class="form-group py-2">
+							{{form.submit (class="btn btn-success")}}
+						</div>
 					</div>
 				</div>
 			</fieldset>
-			<div class="form-group py-2">
-				{{form.submit (class="btn btn-success")}}
-			</div>
 		</form>
+		<div class="p-3">
+			{% for post in userPosts %}
+			<div class="p-3">
+				<div class="container card rounded border-light p-3">
+					<div class="d-flex justify-content-between">
+						<h4 class="fw-bold display-6" style="font-size:3vh;">{{post['title']}}</h4>
+						<!-- Button trigger modal -->
+						<div class="btn-group pb-3 pt-1">
+						  <button type="button" class="btn btn-danger dropdown-toggle p-0 ps-1 pe-2" data-bs-toggle="dropdown" aria-expanded="false">
+						  </button>
+						  <ul class="dropdown-menu">
+						    <li><button type="button" class="btn bg-transparent" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						  Delete Post
+						</button></li>
+						  </ul>
+						</div>
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="exampleModalLabel">Delete Post ?</h5>
+				
+						        <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">
+								</button>
+						      </div>
+						      <div class="modal-body">
+						        Are you sure you want to delete this post? It cannot be reversed.		
+						        (Still a work in progress)					      
+						      </div>
+						      <div class="modal-footer">
+						      	<form action="" method="POST">
+							     	<button type="button" class="btn btn-danger" data-bs-dismiss="modal" name="post_id" value="{{post['post_id']}}">Yes
+							     	</button>
+							    </form>	
+						        <button type="button" class="btn btn-info" data-bs-dismiss="modal">No</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					</div>
+					<h5 class="formatter p-2 border-top" style="font-size:2.5vh;">{{post['content']}}</h5>
+					<div class="container d-flex justify-content-between">
+						<small style="font-size:1.5vh;"> {{post['date_posted']}} </small>	
+						<figcaption class="blockquote-footer" style="font-size:1.5vh;">{{post['username']}} </figcaption>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
 	</div>
 {% endblock content%}
