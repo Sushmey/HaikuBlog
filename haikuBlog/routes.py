@@ -2,7 +2,7 @@ from flask import render_template, url_for, request, flash, redirect, g, session
 from haikuBlog import app
 import syllapy
 from haikuBlog.haikuInput import Haiku, LoginForm, RegistrationForm, ProfileUpdateForm
-
+import ast
 from haikuBlog import mysql
 from haikuBlog.functions import hashPassword, passwordMatch, savePicture, haikuFormatter
 
@@ -124,6 +124,28 @@ def profile():
 		return redirect(url_for('login'))	
 
 
+@app.route('/posts/edit',methods=['GET','POST'])
+def edit():
+	if('user_id' in session):
+		cursor = mysql.connection.cursor()
+		cursor.execute("SELECT * FROM Posts INNER JOIN User ON Posts.user_id = User.user_id WHERE User.user_id='{user_id}'".format(user_id=session['user_id']))
+		userPosts = cursor.fetchall()
+		cursor.close()
+		if(request.method=='POST'):
+			cursor = mysql.connection.cursor()
+			print(request.form['postId'])
+			print(type(request.form['postId']))
+			postID=int(request.form['postId'])
+			cursor.execute("SELECT * FROM Posts WHERE post_id='{postId}'".format(postId=postID))
+			if(cursor.fetchall()):
+				print("It exists!")
+				cursor.execute("DELETE FROM Posts WHERE post_id='{postId}'".format(postId=postID))
+			cursor.close()
+			flash('Post has been deleted!','success')
+			return redirect(url_for('edit'))
+		return render_template('edit.html',title='Edit',userPosts=userPosts)
+	else:		
+		return redirect(url_for('login'))	
 
 
 

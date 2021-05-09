@@ -52,63 +52,15 @@
 								{% endfor %}
 							{% endif %}
 						</div>
-						<div class="form-group py-2">
-							{{form.submit (class="btn btn-success")}}
+						<div class="d-flex justify-content-between">
+							<div class="form-group">
+								{{form.submit (class="btn btn-success")}}
+							</div>
+							<a class="text-decoration-none btn btn-info" href='{{url_for("edit")}}'> Edit posts </a>
 						</div>
 					</div>
 				</div>
 			</fieldset>
 		</form>
-		<div class="p-3">
-			{% for post in userPosts %}
-			<div class="p-3">
-				<div class="container card rounded border-light p-3">
-					<div class="d-flex justify-content-between">
-						<h4 class="fw-bold display-6" style="font-size:3vh;">{{post['title']}}</h4>
-						<!-- Button trigger modal -->
-						<div class="btn-group pb-3 pt-1">
-						  <button type="button" class="btn btn-danger dropdown-toggle p-0 ps-1 pe-2" data-bs-toggle="dropdown" aria-expanded="false">
-						  </button>
-						  <ul class="dropdown-menu">
-						    <li><button type="button" class="btn bg-transparent" data-bs-toggle="modal" data-bs-target="#exampleModal">
-						  Delete Post
-						</button></li>
-						  </ul>
-						</div>
-
-						<!-- Modal -->
-						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLabel">Delete Post ?</h5>
-				
-						        <button type="button" class="btn btn-default" data-bs-dismiss="modal" aria-label="Close">
-								</button>
-						      </div>
-						      <div class="modal-body">
-						        Are you sure you want to delete this post? It cannot be reversed.		
-						        (Still a work in progress)					      
-						      </div>
-						      <div class="modal-footer">
-						      	<form action="" method="POST">
-							     	<button type="button" class="btn btn-danger" data-bs-dismiss="modal" name="post_id" value="{{post['post_id']}}">Yes
-							     	</button>
-							    </form>	
-						        <button type="button" class="btn btn-info" data-bs-dismiss="modal">No</button>
-						      </div>
-						    </div>
-						  </div>
-						</div>
-					</div>
-					<h5 class="formatter p-2 border-top" style="font-size:2.5vh;">{{post['content']}}</h5>
-					<div class="container d-flex justify-content-between">
-						<small style="font-size:1.5vh;"> {{post['date_posted']}} </small>	
-						<figcaption class="blockquote-footer" style="font-size:1.5vh;">{{post['username']}} </figcaption>
-					</div>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
 	</div>
 {% endblock content%}

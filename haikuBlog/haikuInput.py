@@ -84,3 +84,5 @@ class ProfileUpdateForm(FlaskForm):
 			raise ValidationError("Account already exists with that email")	
 
 
+
+

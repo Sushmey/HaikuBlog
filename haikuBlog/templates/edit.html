@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="p-3">
+			{% for post in userPosts %}
+			<div class="p-3">
+				<form action="" method="POST">
+					<div class="container card rounded border-light p-3">
+						<div class="d-flex justify-content-between">
+							<h4 class="fw-bold display-6" style="font-size:3vh;">{{post['title']}}</h4>
+							<button type="submit" value="{{post['post_id']}}" name="postId" class="btn btn-danger mb-3">Delete</button>
+						</div>
+					</form>	
+					<h5 class="formatter p-2 border-top" style="font-size:2vh;">{{post['content']}}</h5>
+					<div class="container d-flex justify-content-between">
+						<small style="font-size:1.5vh;"> {{post['date_posted']}} </small>	
+						<figcaption class="blockquote-footer" style="font-size:1.5vh;">{{post['username']}} </figcaption>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+{% endblock content %}
