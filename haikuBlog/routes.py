@@ -133,15 +133,15 @@ def edit():
 		cursor.close()
 		if(request.method=='POST'):
 			cursor = mysql.connection.cursor()
-			print(request.form['postId'])
-			print(type(request.form['postId']))
 			postID=int(request.form['postId'])
 			cursor.execute("SELECT * FROM Posts WHERE post_id='{postId}'".format(postId=postID))
 			if(cursor.fetchall()):
-				print("It exists!")
 				cursor.execute("DELETE FROM Posts WHERE post_id='{postId}'".format(postId=postID))
+				mysql.connection.commit()
+				flash('Post has been deleted!','success')
+			else:
+				flash("Post doesn't exist, nothing is deleted",'danger')			
 			cursor.close()
-			flash('Post has been deleted!','success')
 			return redirect(url_for('edit'))
 		return render_template('edit.html',title='Edit',userPosts=userPosts)
 	else:		

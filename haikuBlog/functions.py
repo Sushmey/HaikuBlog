@@ -39,10 +39,8 @@ def haikuFormatter(haiku):
 	words = haiku.split()
 	haikuFormatted = ''
 	for word in words:
-		print(word)
 		syllables += syllapy.count(word)
 		if(syllables>= 5):
-			print(syllables)
 			if(syllables == 5):
 				word = word+os.linesep	
 			elif(syllables>=12):
@@ -50,8 +48,6 @@ def haikuFormatter(haiku):
 					word = word+os.linesep
 		haikuFormatted += ' '+word				
 	haikuFormatted = haikuFormatted+os.linesep
-	print('Formated haiku : ')
-	print(haikuFormatted)
 	return haikuFormatted	
 
 
