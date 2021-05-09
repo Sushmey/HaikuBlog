@@ -27,7 +27,7 @@ def before_request():  #This function checks if theres a user in session before 
 @app.route('/home')
 def home():
 	cursor = mysql.connection.cursor()
-	cursor.execute("SELECT * FROM Posts INNER JOIN User ON Posts.user_id = User.user_id")
+	cursor.execute("SELECT * FROM Posts INNER JOIN User ON Posts.user_id = User.user_id ORDER BY date_posted DESC")
 	posts = cursor.fetchall()
 	return render_template('home.html',title='Home',posts=posts)
 
@@ -105,8 +105,9 @@ def profile():
 		user = cursor.fetchall()
 		profile_image = url_for('static',filename='profile_picx/'+user[0]['profile_img'])
 		if(form.validate_on_submit()):
-			if(form.username.data == user[0]['username'] and form.email.data == user[0]['email'] and form.pfp.data == user[0]['profile_img']):
-				flash('Username is same, no change','danger')
+			print(form.pfp.data)
+			if(form.username.data == user[0]['username'] and form.email.data == user[0]['email'] and (form.pfp.data == user[0]['profile_img'] or form.pfp.data==None)):
+				flash('User info is same, no change','danger')
 				return redirect(url_for('profile'))	
 			if(form.pfp.data):
 				profile_image = savePicture(form.pfp.data,user)
@@ -128,7 +129,7 @@ def profile():
 def edit():
 	if('user_id' in session):
 		cursor = mysql.connection.cursor()
-		cursor.execute("SELECT * FROM Posts INNER JOIN User ON Posts.user_id = User.user_id WHERE User.user_id='{user_id}'".format(user_id=session['user_id']))
+		cursor.execute("SELECT * FROM Posts INNER JOIN User ON Posts.user_id = User.user_id WHERE User.user_id='{user_id}' ORDER BY date_posted DESC".format(user_id=session['user_id']))
 		userPosts = cursor.fetchall()
 		cursor.close()
 		if(request.method=='POST'):
