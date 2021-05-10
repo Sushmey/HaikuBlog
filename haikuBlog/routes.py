@@ -8,7 +8,7 @@ from haikuBlog.functions import hashPassword, passwordMatch, savePicture, haikuF
 
 from flask_login import login_user
 
-
+#Default Value
 
 @app.before_request
 def before_request():  #This function checks if theres a user in session before it sends a request 
@@ -63,6 +63,7 @@ def login():
 		userInfo = cursor.fetchall()
 		if(passwordMatch(userInfo[0]['password'],inputPassword)):
 			session['user_id'] = userInfo[0]['user_id']
+			#session['mode'] = 'light' #Dark mode
 			flash('Logged in as {}'.format(userInfo[0]['username']),'success')
 			cursor.close()
 			return redirect('home')

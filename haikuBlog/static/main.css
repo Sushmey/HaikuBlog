@@ -17,6 +17,12 @@ html{
 }
 
 
+@media screen and (max-width: 420px) {
+  .btn-text-reduce {
+    font-size:3vw;
+    padding: 2.5%;
+  }
+}
 
 /* Small devices (tablets, 768px and up) */
 @media ( max-width : 768px ) {

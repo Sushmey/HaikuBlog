@@ -7,7 +7,10 @@
 					<div class="container card rounded border-light p-3">
 						<div class="d-flex justify-content-between">
 							<h4 class="fw-bold display-6" style="font-size:3vh;">{{post['title']}}</h4>
-							<button type="submit" value="{{post['post_id']}}" name="postId" class="btn btn-danger mb-3">Delete</button>
+							<div class="d-flex flex-row-reverse">
+								<button type="submit" value="{{post['post_id']}}" name="postId" class="btn btm-sm btn-danger mb-3 btn-text-reduce">Delete</button>
+								<!--<button type="submit" value="{{post['post_id']}}edit" name="postId" class="btn btn-sm btn-danger mb-3 me-1 btn-text-reduce">Edit</button>-->
+							</div>
 						</div>
 					</form>	
 					<h5 class="formatter p-2 border-top" style="font-size:2vh;">{{post['content']}}</h5>

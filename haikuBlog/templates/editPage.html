@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="p-3">
+			{% for post in userPosts %}
+				{% if post['id']== postToBeEdited %}
+				<div class="container p-2">
+					<form method="POST" action="">
+						{{form.hidden_tag()}} <!-- Adds a CSRF token to protect from attacks -->
+						<fieldset>
+							<div class="form-floating mb-3">
+								{% if form.title.errors %}
+									{{form.title(class="form-control form-control-lg is-invalid")}}
+									<div class="invalid-feedback">
+										{% for error in form.title.errors %}
+											<span> {{error}} </span>
+										{% endfor %}
+									</div>
+								{% else %}
+									{{form.title(class="form-control form-control-lg",placeholder="title", id="floatingTextarea2")}}
+								{% endif %}
+								{{form.title.label}}
+							</div>
+							<div class="form-floating mb-3">
+								{% if form.haiku.errors %}
+									{{form.haiku(class="form-control form-control-lg is-invalid")}}
+									<div class="invalid-feedback">
+										{% for error in form.haiku.errors %}
+											<span> {{error}} </span>
+										{% endfor %}
+									</div>
+								{% else %}
+									{{form.haiku(class="form-control form-control-lg",placeholder="haiku", id="floatingTextarea2", style="min-height:110px")}}
+								{% endif %}
+								{{form.haiku.label}}
+							</div>
+							<!---
+							//Prevent implicit submission of the form 
+			  				<input type="submit" disabled style="display: none" aria-hidden="true">
+			  				--->
+							<div class="form-group">
+								{{form.submit(class="btn btn-success")}}
+							</div>
+						</fieldset>
+					</form>
+				</div>	
+				{% else %}
+				<div class="p-3">
+					<form action="" method="POST">
+						<div class="container card rounded border-light p-3">
+							<div class="d-flex justify-content-between">
+								<h4 class="fw-bold display-6" style="font-size:3vh;">{{post['title']}}</h4>
+							</div>
+						</form>	
+						<h5 class="formatter p-2 border-top" style="font-size:2vh;">{{post['content']}}</h5>
+						<div class="container d-flex justify-content-between">
+							<small style="font-size:1.5vh;"> {{post['date_posted']}} </small>	
+							<figcaption class="blockquote-footer" style="font-size:1.5vh;">{{post['username']}} </figcaption>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+{% endblock content %}
