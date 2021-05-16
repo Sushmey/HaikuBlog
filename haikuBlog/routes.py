@@ -8,21 +8,6 @@ from haikuBlog.functions import hashPassword, passwordMatch, savePicture, haikuF
 
 from flask_login import login_user
 
-#Default Value
-
-@app.before_request
-def before_request():  #This function checks if theres a user in session before it sends a request 
-	cursor = mysql.connection.cursor()
-	g = None
-	if 'user_id' in session:  #If there is a user then it stores the user data in a global request variable imported from flask, called g
-		cursor.execute("SELECT user_id,username FROM User WHERE user_id='{user_id}'".format(user_id=session['user_id']))
-		user = cursor.fetchall()
-		g = user[0]['user_id'] 
-	cursor.close()	
-
-
-
-
 @app.route('/')
 @app.route('/home')
 def home():
